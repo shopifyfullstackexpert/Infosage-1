@@ -62,7 +62,7 @@ const Navbar = () => {
     <nav
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-slate-900/95 backdrop-blur-xl shadow-2xl shadow-primary/10' : 'bg-transparent'
+        isScrolled ? 'bg-white/95 backdrop-blur-xl shadow-2xl shadow-primary/10' : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,7 +83,7 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 className={`relative px-4 py-2 text-sm font-medium transition-all hover:text-accent group ${
-                  isScrolled ? 'text-gray-300' : 'text-white/80'
+                  isScrolled ? 'text-gray-600' : 'text-white/80'
                 }`}
               >
                 {link.name}
@@ -103,20 +103,20 @@ const Navbar = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
-              <X className={isScrolled ? 'text-white' : 'text-white'} size={24} />
+              <X className={isScrolled ? 'text-gray-900' : 'text-white'} size={24} />
             ) : (
-              <Menu className={isScrolled ? 'text-white' : 'text-white'} size={24} />
+              <Menu className={isScrolled ? 'text-gray-900' : 'text-white'} size={24} />
             )}
           </button>
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-slate-900/95 backdrop-blur-xl rounded-2xl mt-2 p-4 shadow-2xl border border-white/10">
+          <div className="lg:hidden bg-white/95 backdrop-blur-xl rounded-2xl mt-2 p-4 shadow-2xl border border-gray-100">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="block py-3 text-gray-300 hover:text-accent transition-colors"
+                className="block py-3 text-gray-600 hover:text-accent transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
@@ -472,10 +472,10 @@ const ServicesSection = () => {
 
 // Stats Section with advanced count-up and glow
 const stats = [
-  { icon: Users, value: 250, suffix: '+', label: 'Happy Clients', color: 'primary', gradient: 'from-primary/20 to-primary-dark/20', textColor: 'text-primary' },
-  { icon: Code, value: 35, suffix: '+', label: 'Expert Developers', color: 'accent', gradient: 'from-accent/20 to-accent-dark/20', textColor: 'text-accent' },
-  { icon: Star, value: 99, suffix: '%', label: 'Satisfaction Rate', color: 'primary', gradient: 'from-primary/20 to-primary-dark/20', textColor: 'text-primary' },
-  { icon: Award, value: 9, suffix: '+', label: 'Years Experience', color: 'accent', gradient: 'from-accent/20 to-accent-dark/20', textColor: 'text-accent' },
+  { icon: Users, value: 250, suffix: '+', label: 'Happy Clients', color: 'primary', gradient: 'from-primary/20 to-primary-dark/20', textColor: 'text-white' },
+  { icon: Code, value: 35, suffix: '+', label: 'Expert Developers', color: 'accent', gradient: 'from-accent/20 to-accent-dark/20', textColor: 'text-white' },
+  { icon: Star, value: 99, suffix: '%', label: 'Satisfaction Rate', color: 'primary', gradient: 'from-primary/20 to-primary-dark/20', textColor: 'text-white' },
+  { icon: Award, value: 9, suffix: '+', label: 'Years Experience', color: 'accent', gradient: 'from-accent/20 to-accent-dark/20', textColor: 'text-white' },
 ];
 
 const StatsSection = () => {
