@@ -10,7 +10,6 @@ import {
   Users, 
   Code, 
   Award, 
-  Clock,
   ArrowRight,
   CheckCircle,
   Menu,
@@ -20,10 +19,8 @@ import {
   Phone,
   MapPin,
   Play,
-  ChevronDown,
   Layers,
   Zap,
-  Shield,
   Target,
   Rocket
 } from 'lucide-react';
