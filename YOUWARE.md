@@ -4,23 +4,26 @@ This is a modern React + TypeScript + Tailwind CSS website for InfoSage Technolo
 
 ## Project Overview
 
-- **Project Type**: Single-page React Application
+- **Project Type**: Modern Corporate IT Solutions Website
 - **Entry Point**: `src/main.tsx`
 - **Build System**: Vite 7.3.2
-- **Styling**: Tailwind CSS 3.4.19
-- **Animations**: GSAP 3.15.0 with ScrollTrigger
+- **Styling**: Tailwind CSS 3.4.19 + Framer Motion/GSAP
+- **Animations**: GSAP 3.15.0 with ScrollTrigger for complex scroll-driven sequences
+- **Brand Identity**: 
+  - Primary: #082d4a (Deep Navy)
+  - Accent: #ec1d25 (Vibrant Red)
+  - Logo/Favicon: Fully updated with brand colors
 
 ## High-Level Animations Implemented
 
-### 1. Hero Section
-- **Multi-layer particle system** with connections and floating geometric shapes
-- **Animated gradient orbs** floating in background
-- **Letter-by-letter text reveal** animation (word + character level)
-- **Grid pattern overlay** for depth
-- **Parallax scroll effect** on content
-- **Floating decorative shapes** with continuous animation
-- **Scroll indicator** with bounce animation
-- **Badge with pulse effect**
+### 1. Hero Section (ScrollDrivenBanner)
+- **Cinematic Video Background** with scroll-synchronized scrubbing
+- **Scroll-triggered content layers** (3 distinct phases of message reveal)
+- **Gradient text effects** using brand primary and accent colors
+- **Interactive call-to-action** with hover animations
+- **Sticky positioning** for immersive scrolling experience
+- **Scroll indicator** with pulse animation
+- **Glassmorphism cards** in the final phase with backdrop blur effects
 
 ### 2. About Section
 - **3D perspective reveal** for image card
@@ -70,10 +73,10 @@ This is a modern React + TypeScript + Tailwind CSS website for InfoSage Technolo
 - **3D transform utilities** (perspective, preserve-3d)
 
 ## Color Scheme
-- Primary: #2563eb (Blue)
-- Secondary: #0f172a (Dark Slate)
-- Accent: #06b6d4 (Cyan)
+- Primary: #082d4a (Deep Navy)
+- Accent: #ec1d25 (Vibrant Red)
 - Background: #f8fafc (Light Gray)
+- Dark Background: #0f172a (Dark Slate)
 
 ## Animation Libraries Used
 - **GSAP 3.15.0** - Core animation library

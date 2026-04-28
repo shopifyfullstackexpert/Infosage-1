@@ -24,26 +24,36 @@ const ScrollDrivenBanner = () => {
 
       // ===== VIDEO SCRUBBING =====
       if (video) {
-        // Wait for metadata to know the duration
-        video.addEventListener('loadedmetadata', () => {
-          const videoDuration = video.duration || 10; // fallback
+        const initVideoScrub = () => {
+          const videoDuration = video.duration;
+          if (!videoDuration) return;
 
-          gsap.to(video, {
-            currentTime: videoDuration,
+          // Using a proxy object for smoother video scrubbing
+          const scrollPos = { time: 0 };
+          
+          gsap.to(scrollPos, {
+            time: videoDuration,
+            ease: 'none',
             scrollTrigger: {
               trigger: containerRef.current,
               start: 'top top',
               end: 'bottom bottom',
-              scrub: 1.5,
+              scrub: 0.1, // Very low scrub for high responsiveness
               onUpdate: (self) => {
-                // Ensure video plays forward/backward smoothly with scroll
-                if (video.duration) {
-                  video.currentTime = video.duration * self.progress;
+                // Directly sync video time with smoothed proxy value
+                if (video.readyState >= 2) {
+                  video.currentTime = scrollPos.time;
                 }
-              },
+              }
             },
           });
-        }, { once: true });
+        };
+
+        if (video.readyState >= 1) {
+          initVideoScrub();
+        } else {
+          video.addEventListener('loadedmetadata', initVideoScrub, { once: true });
+        }
 
         // Force load for Safari/mobile
         video.load();
@@ -120,8 +130,9 @@ const ScrollDrivenBanner = () => {
 
   return (
     <div
+      id="home"
       ref={containerRef}
-      className="section_home_banner relative w-full min-h-[500vh] bg-slate-900"
+      className="section_home_banner relative w-full min-h-[400vh] bg-slate-900"
     >
       {/* 
         Sticky Video Background 
@@ -150,14 +161,14 @@ const ScrollDrivenBanner = () => {
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="w-full md:w-1/2 pr-0 md:pr-8 pointer-events-auto" ref={phase1ContentRef}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                 <span className="text-sm font-medium text-white">Innovation Starts Here</span>
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 text-white leading-tight tracking-tight">
-                Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Evolution</span>
+                Innovating Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">Future</span>
               </h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed font-light">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                We empower businesses with cutting-edge technology solutions that drive growth and digital excellence.
               </p>
             </div>
           </div>
@@ -168,16 +179,19 @@ const ScrollDrivenBanner = () => {
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="w-full md:w-1/2 ml-auto pl-0 md:pl-8 opacity-0 pointer-events-auto" ref={phase2ContentRef}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                <Play className="w-4 h-4 text-cyan-400" />
+                <Play className="w-4 h-4 text-accent" />
                 <span className="text-sm font-medium text-white">Seamless Experience</span>
               </div>
               <h2 className="text-5xl sm:text-6xl font-extrabold mb-6 text-white leading-tight tracking-tight">
-                Empowering <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Growth</span>
+                Global IT <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Solutions</span>
               </h2>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed font-light">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                From custom software to cloud infrastructure, we deliver excellence at every step of your digital journey.
               </p>
-              <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-semibold shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105 inline-flex items-center gap-3 group">
+              <button 
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-full font-semibold shadow-lg hover:shadow-accent/30 transition-all duration-300 hover:scale-105 inline-flex items-center gap-3 group"
+              >
                 Discover More <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -192,16 +206,16 @@ const ScrollDrivenBanner = () => {
               {/* Left 33% Block */}
               <div className="w-full md:w-1/3 opacity-0 pointer-events-auto" ref={phase3LeftRef}>
                 <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-500 shadow-2xl shadow-black/50">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/30">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-primary flex items-center justify-center mb-6 shadow-lg shadow-accent/30">
                     <Smartphone className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-3">
-                    Mobile First
+                    Custom Software
                   </h3>
                   <p className="text-gray-300 mb-8 leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                    Tailored applications designed to solve complex business challenges and enhance user engagement.
                   </p>
-                  <button className="text-cyan-400 font-semibold flex items-center gap-2 group hover:text-cyan-300 transition-colors">
+                  <button className="text-accent font-semibold flex items-center gap-2 group hover:text-accent/80 transition-colors">
                     Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
@@ -212,16 +226,16 @@ const ScrollDrivenBanner = () => {
               {/* Right 33% Block */}
               <div className="w-full md:w-1/3 opacity-0 pointer-events-auto" ref={phase3RightRef}>
                 <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-500 shadow-2xl shadow-black/50">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
                     <Globe className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-3">
-                    Global Scale
+                    Cloud Services
                   </h3>
                   <p className="text-gray-300 mb-8 leading-relaxed">
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                    Scalable and secure cloud infrastructure to modernize your business and reduce operational costs.
                   </p>
-                  <button className="text-blue-400 font-semibold flex items-center gap-2 group hover:text-blue-300 transition-colors">
+                  <button className="text-accent font-semibold flex items-center gap-2 group hover:text-accent/80 transition-colors">
                     Explore Solutions <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>

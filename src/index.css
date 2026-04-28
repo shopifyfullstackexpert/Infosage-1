@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
+  --primary: #082d4a;
+  --primary-dark: #051d30;
   --secondary: #0f172a;
-  --accent: #06b6d4;
+  --accent: #ec1d25;
+  --accent-dark: #c1141b;
   --bg-light: #f8fafc;
-  --bg-dark: #0f172a;
+  --bg-dark: #082d4a;
 }
 
 html {
@@ -30,12 +31,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2563eb, #06b6d4);
+  background: linear-gradient(180deg, var(--primary), var(--accent));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #1d4ed8, #0891b2);
+  background: linear-gradient(180deg, var(--primary-dark), var(--accent-dark, #c1141b));
 }
 
 /* 3D transform utilities */
@@ -91,8 +92,8 @@ body {
 /* Grid pattern background */
 .grid-pattern {
   background-image: 
-    linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(8, 45, 74, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 45, 74, 0.05) 1px, transparent 1px);
   background-size: 30px 30px;
 }
 
