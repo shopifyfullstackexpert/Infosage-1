@@ -10,7 +10,7 @@ const videoBg = new URL('./assets/0ne8ttbt_Emergent 2 Hero Vid.mp4', import.meta
 const ScrollDrivenBanner = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  
+
   const phase1ContentRef = useRef<HTMLDivElement>(null);
   const phase2ContentRef = useRef<HTMLDivElement>(null);
   const phase3LeftRef = useRef<HTMLDivElement>(null);
@@ -21,13 +21,13 @@ const ScrollDrivenBanner = () => {
 
     const ctx = gsap.context(() => {
       const video = videoRef.current;
-      
+
       // ===== VIDEO SCRUBBING =====
       if (video) {
         // Wait for metadata to know the duration
         video.addEventListener('loadedmetadata', () => {
           const videoDuration = video.duration || 10; // fallback
-          
+
           gsap.to(video, {
             currentTime: videoDuration,
             scrollTrigger: {
@@ -38,13 +38,13 @@ const ScrollDrivenBanner = () => {
               onUpdate: (self) => {
                 // Ensure video plays forward/backward smoothly with scroll
                 if (video.duration) {
-                   video.currentTime = video.duration * self.progress;
+                  video.currentTime = video.duration * self.progress;
                 }
               },
             },
           });
         }, { once: true });
-        
+
         // Force load for Safari/mobile
         video.load();
       }
@@ -121,7 +121,7 @@ const ScrollDrivenBanner = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full min-h-[500vh] bg-slate-900"
+      className="section_home_banner relative w-full min-h-[500vh] bg-slate-900"
     >
       {/* 
         Sticky Video Background 
@@ -141,7 +141,7 @@ const ScrollDrivenBanner = () => {
         </video>
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-slate-900/60" />
-        
+
         {/* Gradient overlay to blend with next section */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-900 to-transparent" />
 
@@ -188,7 +188,7 @@ const ScrollDrivenBanner = () => {
         <div className="absolute inset-0 flex items-center pointer-events-none">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0">
-              
+
               {/* Left 33% Block */}
               <div className="w-full md:w-1/3 opacity-0 pointer-events-auto" ref={phase3LeftRef}>
                 <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-500 shadow-2xl shadow-black/50">
