@@ -1,0 +1,218 @@
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight, Globe, Play, Smartphone } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const videoBg = new URL('../assets/0ne8ttbt_Emergent 2 Hero Vid.mp4', import.meta.url).href;
+
+const ScrollDrivenBanner = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const phase1ContentRef = useRef<HTMLDivElement>(null);
+  const phase2ContentRef = useRef<HTMLDivElement>(null);
+  const phase3LeftRef = useRef<HTMLDivElement>(null);
+  const phase3RightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const video = videoRef.current;
+
+      if (video) {
+        const initVideoScrub = () => {
+          const videoDuration = video.duration;
+          if (!videoDuration) return;
+
+          const scrollPos = { time: 0 };
+          
+          gsap.to(scrollPos, {
+            time: videoDuration,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 0.1,
+              onUpdate: () => {
+                if (video.readyState >= 2) {
+                  video.currentTime = scrollPos.time;
+                }
+              }
+            },
+          });
+        };
+
+        if (video.readyState >= 1) {
+          initVideoScrub();
+        } else {
+          video.addEventListener('loadedmetadata', initVideoScrub, { once: true });
+        }
+
+        video.load();
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+        }
+      });
+
+      tl.to(phase1ContentRef.current, {
+        x: '30vw',
+        opacity: 0,
+        scale: 0.9,
+        duration: 1,
+        ease: 'power1.inOut'
+      }, 0);
+
+      tl.fromTo(phase2ContentRef.current,
+        { x: 100, opacity: 0, scale: 0.9 },
+        { x: 0, opacity: 1, scale: 1, duration: 1, ease: 'power2.out' },
+        0.5
+      );
+
+      tl.to(phase2ContentRef.current, {
+        x: '-30vw',
+        opacity: 0,
+        scale: 0.9,
+        duration: 1,
+        ease: 'power1.inOut'
+      }, 2);
+
+      tl.fromTo(phase3LeftRef.current,
+        { x: -100, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, ease: 'power2.out' },
+        3
+      );
+      tl.fromTo(phase3RightRef.current,
+        { x: 100, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, ease: 'power2.out' },
+        3
+      );
+
+      tl.to(phase3LeftRef.current, {
+        x: '8vw',
+        duration: 1,
+        ease: 'power1.inOut'
+      }, 4.5);
+      tl.to(phase3RightRef.current, {
+        x: '-8vw',
+        duration: 1,
+        ease: 'power1.inOut'
+      }, 4.5);
+
+      tl.to({}, { duration: 0.5 });
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div
+      id="home"
+      ref={containerRef}
+      className="section_home_banner relative w-full min-h-[400vh] bg-slate-900"
+    >
+      <div className="sticky top-0 w-full h-screen overflow-hidden">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          preload="auto"
+          muted
+          playsInline
+        >
+          <source src={videoBg} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 bg-slate-900/60" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-900 to-transparent" />
+
+        <div className="absolute inset-0 flex items-center pointer-events-none">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-full md:w-1/2 pr-0 md:pr-8 pointer-events-auto" ref={phase1ContentRef}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-sm font-medium text-white">Innovation Starts Here</span>
+              </div>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 text-white leading-tight tracking-tight">
+                Innovating Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">Future</span>
+              </h1>
+              <p className="text-xl text-gray-300 mb-8 leading-relaxed font-light">
+                We empower businesses with cutting-edge technology solutions that drive growth and digital excellence.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute inset-0 flex items-center pointer-events-none">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-full md:w-1/2 ml-auto pl-0 md:pl-8 opacity-0 pointer-events-auto" ref={phase2ContentRef}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <Play className="w-4 h-4 text-accent" />
+                <span className="text-sm font-medium text-white">Seamless Experience</span>
+              </div>
+              <h2 className="text-5xl sm:text-6xl font-extrabold mb-6 text-white leading-tight tracking-tight">
+                Global IT <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Solutions</span>
+              </h2>
+              <p className="text-xl text-gray-300 mb-8 leading-relaxed font-light">
+                From custom software to cloud infrastructure, we deliver excellence at every step of your digital journey.
+              </p>
+              <button 
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-full font-semibold shadow-lg hover:shadow-accent/30 transition-all duration-300 hover:scale-105 inline-flex items-center gap-3 group"
+              >
+                Discover More <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute inset-0 flex items-center pointer-events-none">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0">
+              <div className="w-full md:w-1/3 opacity-0 pointer-events-auto" ref={phase3LeftRef}>
+                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-500 shadow-2xl shadow-black/50">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-primary flex items-center justify-center mb-6 shadow-lg shadow-accent/30">
+                    <Smartphone className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Custom Software</h3>
+                  <p className="text-gray-300 mb-8 leading-relaxed">
+                    Tailored applications designed to solve complex business challenges and enhance user engagement.
+                  </p>
+                  <button className="text-accent font-semibold flex items-center gap-2 group hover:text-accent/80 transition-colors">
+                    Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="w-full md:w-1/3 opacity-0 pointer-events-auto" ref={phase3RightRef}>
+                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-500 shadow-2xl shadow-black/50">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
+                    <Globe className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Cloud Services</h3>
+                  <p className="text-gray-300 mb-8 leading-relaxed">
+                    Scalable and secure cloud infrastructure to modernize your business and reduce operational costs.
+                  </p>
+                  <button className="text-accent font-semibold flex items-center gap-2 group hover:text-accent/80 transition-colors">
+                    Explore Solutions <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ScrollDrivenBanner;

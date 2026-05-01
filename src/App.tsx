@@ -1,16 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ScrollDrivenBanner from './ScrollDrivenBanner';
+import ScrollDrivenBanner from './components/ScrollDrivenBanner';
+import NavbarComponent from './components/Navbar';
+import AboutSectionComponent from './components/AboutSection';
+import ServicesSectionComponent from './components/ServicesSection';
+import StatsSectionComponent from './components/StatsSection';
+import SolutionsSectionComponent from './components/SolutionsSection';
+import LogoSlider from './components/Logoslider';
+import ContactSectionComponent from './components/ContactSection';
+import FooterComponent from './components/Footer';
 import logo from './assets/logo.svg';
-import { 
-  Globe, 
-  Smartphone, 
-  TrendingUp, 
-  Brain, 
-  Users, 
-  Code, 
-  Award, 
+import {
+  Globe,
+  Smartphone,
+  TrendingUp,
+  Brain,
+  Users,
+  Code,
+  Award,
   ArrowRight,
   CheckCircle,
   Menu,
@@ -571,7 +579,7 @@ const StatsSection = () => {
             <Target className="w-4 h-4" /> Why Choose Us
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Numbers That Speak
+            Numbers That Speak 11
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             Our track record speaks for itself - delivering exceptional results for clients worldwide
@@ -1017,15 +1025,18 @@ const Footer = () => {
 // Main App Component
 function App() {
   return (
-    <div className="min-h-screen">
-      <Navbar />
+    <div className="min-h-screen bg-slate-950 text-slate-900">
+      <NavbarComponent />
       <ScrollDrivenBanner />
-      <AboutSection />
-      <ServicesSection />
-      <StatsSection />
-      <SolutionsSection />
-      <ContactSection />
-      <Footer />
+      <main>
+        <AboutSectionComponent />
+        <ServicesSectionComponent />
+        <StatsSectionComponent />
+        <LogoSlider />
+        <SolutionsSectionComponent />
+        <ContactSectionComponent />
+      </main>
+      <FooterComponent />
     </div>
   );
 }
