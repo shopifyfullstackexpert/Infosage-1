@@ -96,6 +96,9 @@ export default function StatsSection() {
           description="Our track record speaks for itself - delivering exceptional results for clients worldwide."
           icon={Users}
           colorClass="text-accent"
+          titleClass="text-white"
+          descriptionClass="text-white/80"
+          badgeBackground="bg-white/90"
         />
 
         <div ref={statsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
